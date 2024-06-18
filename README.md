@@ -64,7 +64,7 @@ Make sure to follow this directory structure when setting up your project. Place
 
 ## Usage
 
-1. Place your meeting audio file (e.g., MP3, M4A, WAV, etc) in the `audio` directory.
+1. After placing your meeting audio file in the `audio` directory as described above, move to step 2. 
 
 2. Run the application with the desired AI model:
    ```
