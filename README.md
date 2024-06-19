@@ -2,6 +2,8 @@
 
 This Python application leverages the power of OpenAI's Whisper and GPT models, as well as Anthropic's Claude model, to transcribe and analyze meeting audio recordings. The tool provides valuable insights by generating a summary, extracting key points, identifying action items, highlighting key quotes, and performing sentiment analysis on the meeting content.
 
+Additional detail, including a discussion of the challenges and workarounds, can be found in [this companion article](https://medium.com/engaging-innovation/build-your-own-ai-meeting-transcription-and-analysis-tool-20b6211504b3) on Medium.
+
 ## Features
 
 - Transcribe audio recordings using OpenAI's Whisper or Apple's mlx-whisper library
