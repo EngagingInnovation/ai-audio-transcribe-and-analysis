@@ -1,13 +1,10 @@
 import argparse
-from datetime import datetime
 import logging
-import sys
 from pathlib import Path
 
 import whisper
 #import mlx_whisper
 from summarization import SummarizationFactory
-from prompts import personas, prompts
 
 
 def setup_logging(verbose=False):

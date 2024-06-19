@@ -21,7 +21,7 @@ This Python application leverages the power of OpenAI's Whisper and GPT models, 
 2. Install the required Whisper dependencies (which include `ffmpeg`):
    * option 1 - follow the [Setup](https://github.com/openai/whisper?tab=readme-ov-file#setup) section of the OpenAI Whisper Python Library
    * option 2 - if you are on Apple Silicon, follow the [Setup](https://github.com/ml-explore/mlx-examples/tree/main/whisper#setup) section of the Apple MLX Whisper Python Library
-     * if you follow this option, modify lines [7 and 8](app/main.py#L7), and lines [23 - 29](app/main.py#L23) of `main.py` to switch between the OpenAI interface and the MLX interface. 
+     * if you follow this option, modify lines [5 and 6](app/main.py#L5), and lines [20 - 26](app/main.py#L20) of `main.py` to switch between the OpenAI interface and the MLX interface. 
 
 3. Install the OpenAI and Anthropic Python Libraries
    ```
