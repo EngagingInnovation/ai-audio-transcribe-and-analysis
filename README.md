@@ -15,7 +15,7 @@ This Python application leverages the power of OpenAI's Whisper and GPT models, 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/ai-meeting-tool.git
+   git clone https://github.com/EngagingInnovation/ai-audio-transcribe-and-analysis.git
    ```
 
 2. Install the required Whisper dependencies (which include `ffmpeg`):
