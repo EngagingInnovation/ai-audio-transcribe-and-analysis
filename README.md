@@ -103,3 +103,5 @@ By exploring the example folder, you can get a better understanding of the tool'
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
 
+Original inspiration came from this OpenAI [tutorial](https://platform.openai.com/docs/tutorials/meeting-minutes)
+
