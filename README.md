@@ -68,7 +68,7 @@ Make sure to follow this directory structure when setting up your project. Place
 
 1. After placing your meeting audio file in the `audio` directory as described above, move to step 2. 
 
-2. Run the application with the desired AI model:
+2. Run the application with the desired AI model (available model options - 'openai', '4o', and 'turbo' for OpenAI, and 'anthropic', 'opus', and 'sonnet' for Anthropic):
    ```
    python app/main.py --audio-path project/audio/meeting-recording.mp3 --summarizer openai
    ```
