@@ -11,7 +11,7 @@ steve = "You are Steve the Skeptic. You are a critical thinker with a cautious a
 
 veronica = "You are Veronica the Visionary. You are a creative and forward-thinking strategist with a passion for innovation, creativity, and long-term vision. You are known for your ability to think outside the box, come up with innovative ideas, and set strategic directions. You focus on long-term goals, visionary projects, and potential game-changers. Your tone is inspirational, future-oriented, and strategic."
 
-output_request = "Your must always remove lines that begin with a series of three backticks (```) from your response."
+output_request = "When presented with a response-template xml block, you must build your respone to conform to the instructions within that block. Only respond with the formatted content from inside the response-template xml block. Your must never return the strings '<response-template>' or '</repsonse-template>' in your response."
 
 personas = {
     "default": default + " " + output_request,
@@ -25,15 +25,15 @@ personas = {
 
 # Response Template Setup - warms up the AI to produce the formatted output we desire
 response_template_example_prompt = """
-Provide three strategies for a successful meeting. Use this response-template to build your response. Only respond with the formatted content from within the response-template block
+Provide three strategies for a successful meeting. 
 
 
-``` response-template
+<response-template>
 {{ FOR EACH STRATEGY IN LIST }}
 {{ STRATEGY.NUMBER }}. **{{ STRATEGY.TOPIC }}:** 
 {{ STRATEGY.DESCRIPTION }} 
 
-```
+</response-template>
 """
 
 response_template_example_response = """
@@ -50,16 +50,18 @@ Document key takeaways, decisions made, and assigned tasks during the meeting, a
 
 # Abstract Summary Prompt
 abstract_summary_prompt = """
-You will read the following meeting transcript text and summarize it into two or three abstract paragraphs. Each paragraph should be between 2 and 4 sentences long. You will also come up with a short title that describes the transcription. Aim to retain the most important points, providing a coherent and readable summary that could help a person understand the main points of the discussion without needing to read the entire text. Please avoid unnecessary details or tangential points, and do not include bullet points or lists. Use the response-template to build your respone. Only respond with the formatted content from inside the response-template block.
+You will read the following meeting transcript text and summarize it into two or three abstract paragraphs. Each paragraph should be between 2 and 4 sentences long. You will also come up with a short title that describes the transcription. Aim to retain the most important points, providing a coherent and readable summary that could help a person understand the main points of the discussion without needing to read the entire text. Please avoid unnecessary details or tangential points, and do not include bullet points or lists. 
 
 
-``` response-template
+<response-template>
 ## {{ TITLE }}  
 {{ ABSTRACT PARAGRAPHS }}
-```
+</response-template>
 
---- TRANSCRIPT ---
+
+<transcript>
 {transcription}
+</transcript>
 """
 
 
@@ -73,10 +75,10 @@ Your first responsibility is to identify each of the main points that were discu
 ## PHASE 2 ##
 After you have created your list, you have a second responsibility. This is important, you must sort the list you created such that the most discussed topic is at the top of the list. Each additional topic should follow in order, so that the second most discussed topic is second in the list, the third most discussed is third, until the end of the list. Your answer should be formatted using the response-template below with each KEY_POINT aligning to your ordered list, where KEY_POINT number one aligns with your top most list item. Please return the formatted list in this order. 
 
-Each item in the ordered list should include a heading followed by a list of the details of that point. Use the response-template to build your respone. Only respond with the formatted content from inside the response-template block.
+Each item in the ordered list should include a heading followed by a list of the details of that point.
 
 
-``` respnose-template
+<response-template>
 {{ FOR EACH POINT IN KEY_POINT LIST }}
 ### {{ POINT.NAME }}
 - {{ POINT.DETAIL }}
@@ -84,18 +86,20 @@ Each item in the ordered list should include a heading followed by a list of the
 - {{ POINT.DETAIL }}
 - {{ POINT.DETAIL }}
 - {{ POINT.DETAIL }}
-```
+</response-template>
 
---- TRANSCRIPT ---
+
+<transcript>
 {transcription}
+</transcript>
 """
 
 # Action Items Extraction Prompt
 action_items_prompt = """
-Please review the meeting transcript text and identify any tasks, assignments, or actions that were agreed upon or mentioned as needing to be done. These could be tasks assigned to specific individuals, or general actions that the group has decided to take. Please list these action items clearly and in detail. Each item in the ordered list should include a title in bold following by a list of the tasks, assignments or actions items. Use the response-template to build your respone. Only respond with the formatted content from inside the response-template block.
+Please review the meeting transcript text and identify any tasks, assignments, or actions that were agreed upon or mentioned as needing to be done. These could be tasks assigned to specific individuals, or general actions that the group has decided to take. Please list these action items clearly and in detail. Each item in the ordered list should include a title in bold following by a list of the tasks, assignments or actions items. 
 
 
-``` response-template
+<response-template>
 {{ FOR EACH ITEM IN ACTION_ITEM LIST }}
 ### {{ ITEM.NUMBER }}. {{ ITEM.NAME }}  
 - {{ ITEM.DETAIL }}
@@ -103,25 +107,29 @@ Please review the meeting transcript text and identify any tasks, assignments, o
 - {{ ITEM.DETAIL }}
 - {{ ITEM.DETAIL }}
 - {{ ITEM.DETAIL }}
-```
+</response-template>
 
---- TRANSCRIPT ---
+
+<transcript>
 {transcription}
+</transcript>
 """
 
 # Key Quotes Prompt
 key_quotes_prompt = """
-Please review the meeting transcript text and identify any significant statements or key quotes that capture important points, decisions, or memorable phrases. This list should be limited to 5 or fewer selections. These should be quotes that stand out due to their impact, clarity, or importance in the context of the meeting. Each quote should be presented in a clearly formatted manner. Use the response-template to build your respone. Only respond with the formatted content from inside the response-template block.
+Please review the meeting transcript text and identify any significant statements or key quotes that capture important points, decisions, or memorable phrases. This list should be limited to 5 or fewer selections. These should be quotes that stand out due to their impact, clarity, or importance in the context of the meeting. Each quote should be presented in a clearly formatted manner. 
 
 
-``` response-template
+<response-template>
 {{ FOR EACH QUOTE IN KEY_QUOTES LIST }}
 **Quote {{ QUOTE.NUMBER }}**
 > "{{ QUOTE.TEXT }}"
-```
+</response-template>
 
---- TRANSCRIPT ---
+
+<transcript>
 {transcription}
+</transcript>
 """
 
 
@@ -129,8 +137,10 @@ Please review the meeting transcript text and identify any significant statement
 sentiment_analysis_prompt = """
 Please use your expertise in language and emotion analysis for this task. Review the following meeting transcript text and provide an analysis of the overall sentiment. Please consider the overall tone of the discussion, the emotion conveyed by the language used, and the context in which words and phrases are used. Indicate whether the sentiment is generally positive, negative, or neutral, and provide brief explanations for your analysis where possible. Please include bullet points and subheadings for specific explanations or examples and any additional formatting as needed. Your answer should be concise, consisting of no more than three paragraphs in length. 
 
---- TRANSCRIPT ---
+
+<transcript>
 {transcription}
+</transcript>
 """
 
 

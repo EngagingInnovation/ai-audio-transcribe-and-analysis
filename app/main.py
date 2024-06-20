@@ -1,6 +1,7 @@
 import argparse
 import logging
 from pathlib import Path
+from prompts import personas
 
 import whisper
 #import mlx_whisper
