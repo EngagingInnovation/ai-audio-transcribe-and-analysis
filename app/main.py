@@ -20,7 +20,6 @@ configurations = {
     "sonnet":    {"type": "anthropic", "model": "claude-3-5-sonnet-20240620", "cpmm_response": 15, "cpmm_prompt": 3}
 }
 
-
 def setup_logging(verbose=False):
     log_level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(

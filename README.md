@@ -23,7 +23,7 @@ Additional detail, including a discussion of the challenges and workarounds, can
 2. Install the required Whisper dependencies (which include `ffmpeg`):
    * option 1 - follow the [Setup](https://github.com/openai/whisper?tab=readme-ov-file#setup) section of the OpenAI Whisper Python Library
    * option 2 - if you are on Apple Silicon, follow the [Setup](https://github.com/ml-explore/mlx-examples/tree/main/whisper#setup) section of the Apple MLX Whisper Python Library
-     * if you follow this option, modify lines [6 and 7](app/main.py#L6), and lines [21 - 27](app/main.py#L21) of `main.py` to switch between the OpenAI interface and the MLX interface. 
+     * if you follow this option, modify lines [6 and 7](app/main.py#L6), and lines [33 - 39](app/main.py#L33) of `main.py` to switch between the OpenAI interface and the MLX interface. 
 
 3. Install the OpenAI and Anthropic Python Libraries
    ```

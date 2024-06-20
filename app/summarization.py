@@ -59,6 +59,7 @@ class AbstractSummarizer(ABC):
         return unformatted_prompt.format(transcription=self.transcript)
 
 
+
 class OpenAISummarizer(AbstractSummarizer):
     def __init__(self, model, cpmm_response, cpmm_prompt, logger=None):
         super().__init__(
