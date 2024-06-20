@@ -60,18 +60,13 @@ class AbstractSummarizer(ABC):
 
 
 class OpenAISummarizer(AbstractSummarizer):
-    """
-    OpenAI GPT-4o model is currently priced at 
-    - $15 per million incoming response tokens
-    - $ 5 per million outgoing prompt tokens
-    """
-    def __init__(self, logger=None):
+    def __init__(self, model, cpmm_response, cpmm_prompt, logger=None):
         super().__init__(
-            client = OpenAI(),
-            model = "gpt-4o",
-            cpmm_response = 15, # incoming AI answers, dollars per million tokens
-            cpmm_prompt = 5,    # outgoing prompts, dollars per million tokens
-            logger = logger
+            client=OpenAI(),
+            model=model,
+            cpmm_response=cpmm_response,
+            cpmm_prompt=cpmm_prompt,
+            logger=logger
         )
     
     @property
@@ -96,19 +91,15 @@ class OpenAISummarizer(AbstractSummarizer):
         return "".join(choice.message.content for choice in response.choices)
 
 
+
 class AnthropicSummarizer(AbstractSummarizer):
-    """
-    Anthropic Claude 3 Opus model is currently priced at 
-    - $75 per million incoming message tokens
-    - $15 per million outgoing prompt tokens
-    """
-    def __init__(self, logger=None):
+    def __init__(self, model, cpmm_response, cpmm_prompt, logger=None):
         super().__init__(
-            client = Anthropic(),
-            model = "claude-3-opus-20240229",
-            cpmm_response = 75, # incoming AI answers, dollars per million tokens
-            cpmm_prompt = 15,   # outgoing prompts, dollars per million tokens
-            logger = logger
+            client=Anthropic(),
+            model=model,
+            cpmm_response=cpmm_response,
+            cpmm_prompt=cpmm_prompt,
+            logger=logger
         )
     
     @property
@@ -133,12 +124,13 @@ class AnthropicSummarizer(AbstractSummarizer):
         return "".join(block.text for block in message.content)
         
 
+
 class SummarizationFactory:
     @staticmethod
-    def get_summarizer(ai_type, logger):
+    def get_summarizer(ai_type, model, cpmm_response, cpmm_prompt, logger=None):
         if ai_type == "openai":
-            return OpenAISummarizer(logger)
+            return OpenAISummarizer(model, cpmm_response, cpmm_prompt, logger)
         elif ai_type == "anthropic":
-            return AnthropicSummarizer(logger)
+            return AnthropicSummarizer(model, cpmm_response, cpmm_prompt, logger)
         else:
             raise ValueError(f"Unknown summarizer type: {ai_type}")

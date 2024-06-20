@@ -7,6 +7,19 @@ import whisper
 #import mlx_whisper
 from summarization import SummarizationFactory
 
+# MODEL CONFIGURATION
+configurations = {
+    # OpenAI models
+    "openai": {"type": "openai", "model": "gpt-4o", "cpmm_response": 15, "cpmm_prompt": 5},
+    "4o":     {"type": "openai", "model": "gpt-4o", "cpmm_response": 15, "cpmm_prompt": 5},
+    "turbo":  {"type": "openai", "model": "gpt-4-turbo", "cpmm_response": 30, "cpmm_prompt": 10},
+
+    # Anthropic models
+    "anthropic": {"type": "anthropic", "model": "claude-3-opus-20240229", "cpmm_response": 75, "cpmm_prompt": 15},
+    "opus":      {"type": "anthropic", "model": "claude-3-opus-20240229", "cpmm_response": 75, "cpmm_prompt": 15},
+    "sonnet":    {"type": "anthropic", "model": "claude-3-5-sonnet-20240620", "cpmm_response": 15, "cpmm_prompt": 3}
+}
+
 
 def setup_logging(verbose=False):
     log_level = logging.DEBUG if verbose else logging.INFO
@@ -20,11 +33,11 @@ def transcribe_audio(audio_file_path, logger):
     logger.info("Starting audio transcription...")
     model = whisper.load_model("medium.en")
     result = model.transcribe(str(audio_file_path)) 
-    # result = mlx_whisper.transcribe(
+    #result = mlx_whisper.transcribe(
     #     str(audio_file_path), 
     #     path_or_hf_repo="mlx-community/whisper-medium.en-mlx-8bit",
     #     verbose=True
-    # )
+    #)
     logger.debug(f"Transcription result: {result}")
     logger.info("Transcription completed.")
     return result["text"]
@@ -110,6 +123,10 @@ def main():
         logger.error("The specified audio file does not exist.")
         return
 
+    if summarizer_type not in configurations:
+        logger.error("The specified AI summarizer is not configured.")
+        return
+
     transcript_folder = project_root / "transcript" 
     transcript_folder.mkdir(parents=True, exist_ok=True)
     text_file_name = audio_path.stem + ".txt"
@@ -134,7 +151,14 @@ def main():
     md_file_name = audio_path.stem + "." + summarizer_type + ".md"
     md_file_path = summary_folder / md_file_name
 
-    summarizer = SummarizationFactory.get_summarizer(summarizer_type, logger)
+    config = configurations[summarizer_type]
+    summarizer = SummarizationFactory.get_summarizer(
+        ai_type=config.get("type"),
+        model=config.get("model"),
+        cpmm_response=config.get("cpmm_response"),
+        cpmm_prompt=config.get("cpmm_prompt"),
+        logger=logger
+    )
     summarizer.persona = persona
     summarizer.transcript = transcribed_text
 
